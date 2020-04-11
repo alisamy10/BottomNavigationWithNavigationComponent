@@ -8,17 +8,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.plusAssign
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.omni.myapplication.navigation.KeepStateNavigator
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+
+
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -30,24 +33,48 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        // get fragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)!!
 
-        navView.setOnNavigationItemSelectedListener { item ->
+        // setup custom navigator
+        val navigator =
+            KeepStateNavigator(this, navHostFragment.childFragmentManager, R.id.nav_host_fragment)
+
+        navController.navigatorProvider += navigator
+
+
+
+
+        nav_view.setOnNavigationItemSelectedListener { item ->
             return@setOnNavigationItemSelectedListener onNavItemDestinationSelected(
                 item,
                 navController
             )
         }
 
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
+
             if (destination.id == R.id.splashSFragment) {
-                navView.visibility = View.GONE
+                nav_view.visibility = View.GONE
                 supportActionBar?.hide()
             } else {
-                navView.visibility = View.VISIBLE
+                nav_view.visibility = View.VISIBLE
                 supportActionBar?.show()
             }
         }
+
+
+
+        navController.setGraph(R.navigation.mobile_navigation)
+
+
+
+
+
+
+        nav_view.setupWithNavController(navController)
+
 
     }
 

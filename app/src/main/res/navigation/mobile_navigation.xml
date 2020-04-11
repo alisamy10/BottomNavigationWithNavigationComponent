@@ -5,25 +5,11 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/splashSFragment">
 
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.omni.myapplication.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
 
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.omni.myapplication.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.omni.myapplication.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/splashSFragment"
+        app:destination="@id/splashSFragment"
+
         android:name="com.omni.myapplication.ui.SplashFragment"
         android:label="SplashSFragment" >
         <action
@@ -36,4 +22,19 @@
             app:popUpTo="@+id/mobile_navigation"
             app:popUpToInclusive="true"/>
     </fragment>
+    <keep_state_fragment
+        android:id="@+id/navigation_home"
+        android:name="com.omni.myapplication.ui.home.HomeFragment"
+        android:label="@string/title_home" />
+
+
+    <keep_state_fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.omni.myapplication.ui.dashboard.DashboardFragment"
+        android:label="fragment_dashboard" />
+    <keep_state_fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.omni.myapplication.ui.notifications.NotificationsFragment"
+        android:label="fragment_notifications"
+        />
 </navigation>
